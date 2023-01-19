@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation,useNavigate,usenavigation } from 'react-router'
+import { useLocation,useNavigate,usenavigation } from 'react-router-dom'
 
 export default function Header() {
 
@@ -18,7 +18,7 @@ export default function Header() {
                 <img
                 src='https://b2bweb.realtor.com/web_assets/rdc/SFMC-lp-images/2021/RDC%20-tagline-wide.png'
                 alt='Realtor Logo'
-                className='h-5 cursor-pointer'
+                className='h-8 cursor-pointer'
                 onClick={()=>navigate('/')}/>
             </div>
             <div>
