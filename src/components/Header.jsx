@@ -7,7 +7,7 @@ export default function Header() {
     const navigate = useNavigate()
 
     function macthroute(route){
-        if(route==location.pathname){
+        if(route===location.pathname){
             return true
         }
     }
