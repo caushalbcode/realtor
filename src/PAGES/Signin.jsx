@@ -1,11 +1,28 @@
-import React from 'react'
 import { useState } from 'react'
 import { AiFillEye, AiFillEyeInvisible} from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 
 export default function Signin() {
+  const navigate=useNavigate()
   const [showPassword,setShowPassword] = useState(false)
+  const [email,setEmail] =useState('')
+  const [password,setPassword]=useState('')
+ 
+  async function onSubmit(e){
+    e.preventDefault()
+    try {
+      const auth = getAuth();
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password)
+      const user=userCredentials.user
+      toast.success("Login Successful")
+      navigate('/')
+    } catch (error) {
+      toast.error("Invalid Credentials")
+    }
+  }
   return (
     <section>
       <h1 className='text-3xl font-bold text-center py-6'>Sign In</h1>
@@ -18,12 +35,13 @@ export default function Signin() {
           />
         </div>
         <div className='mx-auto md:mt-6 lg:w-[40%] lg:ml-20 md:w-[67%]'>
-          <form>
+          <form onSubmit={onSubmit}>
             <input 
                 className='w-full rounded-lg h-8 px-5 py-6
                 border-gray-300 border-2 text-lg focus:border-blue-500 focus:outline-none
                 transition ease-in-outduration-300'
                 placeholder='Email Address '
+                onChange={(e)=>setEmail(e.target.value)}
             />
             <div className='my-6 relative'>
                     <input 
@@ -32,6 +50,7 @@ export default function Signin() {
                       border-gray-300 border-2 text-lg focus:border-blue-500 focus:outline-none
                       transition ease-in-outduration-300'
                       placeholder='Password '
+                      onChange={(e)=>setPassword(e.target.value)}
                     />
                     {showPassword?(
                       <AiFillEye
@@ -59,7 +78,7 @@ export default function Signin() {
                   <p className='font-bold mx-3'>OR</p>
                 </div>
 
-                <Button title='Continue With Google' back="bg-red-500" pic='Fcgoogle'/>                
+                <Button type="button" click={true} title='Continue With Google' back="bg-red-500" pic='Fcgoogle'/>                
           </form>         
         </div>
       </div>
